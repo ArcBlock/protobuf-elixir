@@ -2,10 +2,14 @@
   type: <%= if String.starts_with?(name, "request") do %><%= "input" %><% else %><%= "output" %><% end %>
   <%= if Enum.count(fields) > 0 do %>
   fields:
-    <%= for {fname, _, opts} <- fields do %>
+<%= for {fname, _, opts} <- fields do %>
+<%= if (not String.starts_with?(name, "request")) and opts[:type] == "any" do %>    - name: <%= fname %>
+      type: <%= if opts[:repeated] do %><%= "[#{opts[:type]}]" %><% else %><%= opts[:type] %><% end %>
+      meta: resolver=google_protobuf_any 
+<% else %>
     - name: <%= fname %>
       type: <%= if opts[:repeated] do %><%= "[#{opts[:type]}]" %><% else %><%= opts[:type] %><% end %>
-    <% end %>
-  <% else %>
+<% end %><% end %>
+<% else %>
   fields: []
-  <% end %>
+<% end %>
