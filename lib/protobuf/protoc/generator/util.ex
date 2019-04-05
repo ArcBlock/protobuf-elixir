@@ -84,6 +84,7 @@ defmodule Protobuf.Protoc.Generator.Util do
       "declare_node",
       "recover_wallet",
       "remove_wallet",
-      "store_file"
+      "store_file",
+      "load_file"
     ]
 end
