@@ -9,8 +9,21 @@ defmodule Protobuf.Protoc.Generator.Message do
 
   def generate(ctx, desc) do
     msg_struct = parse_desc(ctx, desc)
-    ctx = %{ctx | namespace: msg_struct[:new_namespace]}
-    [gen_msg(ctx.syntax, msg_struct)] ++ gen_nested_msgs(ctx, desc) ++ gen_nested_enums(ctx, desc)
+    black_list = Util.get_black_list()
+
+    name =
+      msg_struct[:name] |> String.trim_leading("request_") |> String.trim_leading("response_")
+
+    case msg_struct[:name] !== name and Enum.member?(black_list, name) do
+      true ->
+        []
+
+      false ->
+        ctx = %{ctx | namespace: msg_struct[:new_namespace]}
+
+        [gen_msg(ctx.syntax, msg_struct)] ++
+          gen_nested_msgs(ctx, desc) ++ gen_nested_enums(ctx, desc)
+    end
   end
 
   @spec parse_desc(
