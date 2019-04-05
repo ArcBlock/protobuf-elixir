@@ -33,6 +33,7 @@ defmodule Protobuf.Protoc.Generator do
 
     list
     |> List.flatten()
+    |> Enum.reject(&is_nil/1)
     |> Enum.join("\n")
   end
 

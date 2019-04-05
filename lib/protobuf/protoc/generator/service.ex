@@ -13,7 +13,13 @@ defmodule Protobuf.Protoc.Generator.Service do
     # service can't be nested
     mod_name = Util.mod_name(ctx, [Util.trans_name(desc.name)])
     name = Util.attach_raw_pkg(desc.name, ctx.package)
-    methods = Enum.map(desc.method, fn m -> generate_service_method(ctx, m) end)
+    black_list = Util.get_black_list()
+
+    methods =
+      desc.method
+      |> Enum.filter(fn m -> not Enum.member?(black_list, m.name) end)
+      |> Enum.map(fn m -> generate_service_method(ctx, m) end)
+
     Protobuf.Protoc.Template.service(mod_name, name, methods)
   end
 

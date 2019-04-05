@@ -68,4 +68,22 @@ defmodule Protobuf.Protoc.Generator.Util do
   defp to_gql("big_uint"), do: "string"
   defp to_gql("big_sint"), do: "string"
   defp to_gql(type), do: type
+
+  def get_black_list,
+    do: [
+      "get_asset_address",
+      "list_wallet",
+      "load_wallet",
+      "pin_file",
+      "sign_data",
+      "search",
+      "multisig",
+      "create_tx",
+      "create_wallet",
+      "declare",
+      "declare_node",
+      "recover_wallet",
+      "remove_wallet",
+      "store_file"
+    ]
 end
