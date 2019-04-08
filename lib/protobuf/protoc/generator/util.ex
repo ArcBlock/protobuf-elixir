@@ -85,6 +85,7 @@ defmodule Protobuf.Protoc.Generator.Util do
       "recover_wallet",
       "remove_wallet",
       "store_file",
-      "load_file"
+      "load_file",
+      "list_account"
     ]
 end
