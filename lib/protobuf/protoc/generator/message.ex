@@ -87,7 +87,13 @@ defmodule Protobuf.Protoc.Generator.Message do
     |> Enum.map(fn f ->
       type = Util.trans_type(f[:type])
 
-      {f[:name], f[:number], repeated: f[:label] === "repeated", type: type, oneof: f[:oneof]}
+      opts = Map.get(f, :opts, %{})
+
+      {f[:name], f[:number],
+       repeated: f[:label] === "repeated",
+       type: type,
+       oneof: f[:oneof],
+       deprecated: opts[:deprecated]}
     end)
   end
 
