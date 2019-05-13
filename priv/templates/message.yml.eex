@@ -5,11 +5,14 @@
 <%= for {fname, _, opts} <- fields do %>
 <%= if (not String.starts_with?(name, "request")) and opts[:type] == "any" do %>    - name: <%= fname %>
       type: <%= if opts[:repeated] do %><%= "[#{opts[:type]}]" %><% else %><%= opts[:type] %><% end %>
-      meta: resolver=google_protobuf_any 
+      meta: resolver=google_protobuf_any <%= if opts[:deprecated] do %>deprecated=true<% end %>
+<% else %><%= if opts[:deprecated] do %>    - name: <%= fname %>
+      type: <%= if opts[:repeated] do %><%= "[#{opts[:type]}]" %><% else %><%= opts[:type] %><% end %>
+      meta: deprecated=true
 <% else %>
     - name: <%= fname %>
       type: <%= if opts[:repeated] do %><%= "[#{opts[:type]}]" %><% else %><%= opts[:type] %><% end %>
-<% end %><% end %>
+<% end %><% end %><% end %>
 <% else %>
   fields: []
 <% end %>
