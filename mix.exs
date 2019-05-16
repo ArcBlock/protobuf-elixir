@@ -25,7 +25,7 @@ defmodule Protobuf.Mixfile do
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.14", only: :dev, runtime: false},
       {:eqc_ex, "~> 1.4", only: [:dev, :test]},
-      {:recase, "~> 0.4", only: :dev, runtime: false}
+      {:recase, "~> 0.4", runtime: false}
     ]
   end
 
